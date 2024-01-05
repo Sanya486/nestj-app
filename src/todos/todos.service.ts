@@ -18,4 +18,26 @@ export class TodosService {
   getAllDone() {
     return this.doneTodoModel.find();
   }
+
+  addUndoneTodo(body: UndoneTodo) {
+    const createdTodo = new this.undoneTodoModel(body);
+    return createdTodo.save();
+  }
+
+  addDoneTodo(body: DoneTodo) {
+    const createdTodo = new this.doneTodoModel(body);
+    return createdTodo.save();
+  }
+
+  deleteUndoneTodo(id: string) {
+    return this.undoneTodoModel.findByIdAndDelete(id);
+  }
+
+  deleteAllUndoneTodos() {
+    return this.undoneTodoModel.deleteMany({});
+  }
+
+  deleteAllDoneTodos() {
+    return this.doneTodoModel.deleteMany({});
+  }
 }
