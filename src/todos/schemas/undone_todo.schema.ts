@@ -9,7 +9,7 @@ export type UndoneTodoDocument = HydratedDocument<UndoneTodo>;
 export class UndoneTodo {
   @IsString()
   @IsNotEmpty()
-  @Prop()
+  @Prop({ required: true })
   title: string;
 }
 

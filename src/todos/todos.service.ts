@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UndoneTodo } from './schemas/undone_todo.schema';
 import { Model } from 'mongoose';
@@ -19,7 +19,11 @@ export class TodosService {
     return this.doneTodoModel.find();
   }
 
-  addUndoneTodo(body: UndoneTodo) {
+  async addUndoneTodo(body: UndoneTodo) {
+    const isTodoExists = await this.undoneTodoModel.findOne({
+      title: { $regex: new RegExp(body.title, 'i') },
+    });
+    if (isTodoExists) throw new ForbiddenException('Title has already exists');
     const createdTodo = new this.undoneTodoModel(body);
     return createdTodo.save();
   }

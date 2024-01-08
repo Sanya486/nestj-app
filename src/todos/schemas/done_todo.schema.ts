@@ -9,7 +9,7 @@ export type DoneTodoDocument = HydratedDocument<DoneTodo>;
 export class DoneTodo {
   @IsString()
   @IsNotEmpty()
-  @Prop()
+  @Prop({ required: true })
   title: string;
 }
 
